@@ -2,6 +2,8 @@ import cv2
 import numpy as np
 import os
 import pickle
+from scipy.io import savemat
+from tempfile import TemporaryFile
 
 def generate_labelname_label_mapping():
     a = open('train.csv', 'r')
@@ -24,7 +26,7 @@ def generate_labelname_label_mapping():
 
 def generate_training_set(direct):
     image_name = os.listdir(direct)
-    mat = np.zeros((len(image_name), 256, 256, 3))
+    mat = np.zeros((len(image_name), 224, 224, 3))
     labels = np.zeros((len(image_name)))
     a = open('train.csv', 'r')
     a = a.readlines()
@@ -35,6 +37,7 @@ def generate_training_set(direct):
     i = 0
     for imagename in image_name:
         im = cv2.imread(direct+imagename)
+        im = cv2.resize(im, (224, 224))
         mat[i] = im
         labels[i] = di[a[i].split(',')[1][:-1]]
         i+=1
@@ -42,7 +45,13 @@ def generate_training_set(direct):
 
 def wrapper():
     mat, label = generate_training_set('train_img/')
-    pickle.dump({'x':mat, 'label': label}, open("dataset","wb"))
+    outfil = open('training_X', 'w')
+    outfile = open('training_Y', 'w')
+    np.save(outfil, mat)
+    np.save(outfile, label)
+    print mat.shape
+    print label.shape
+    #savemat('trainset', {'x':mat, 'y': label})
 
 if __name__ == "__main__":
     wrapper()
