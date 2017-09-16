@@ -26,7 +26,7 @@ def generate_labelname_label_mapping():
 
 def generate_training_set(direct):
     image_name = os.listdir(direct)
-    mat = np.zeros((len(image_name), 224, 224, 3))
+    mat = np.zeros((len(image_name), 256, 256, 3))
     labels = np.zeros((len(image_name)))
     a = open('train.csv', 'r')
     a = a.readlines()
@@ -37,7 +37,6 @@ def generate_training_set(direct):
     i = 0
     for imagename in image_name:
         im = cv2.imread(direct+imagename)
-        im = cv2.resize(im, (224, 224))
         mat[i] = im
         labels[i] = di[a[i].split(',')[1][:-1]]
         i+=1
