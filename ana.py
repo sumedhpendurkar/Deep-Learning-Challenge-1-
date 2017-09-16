@@ -37,20 +37,24 @@ def generate_training_set(direct):
     i = 0
     for imagename in image_name:
         im = cv2.imread(direct+imagename)
+        #print imagename, a[i].split(',')[1][:-1], di[a[i].split(',')[1][:-1]]
         mat[i] = im
         labels[i] = di[a[i].split(',')[1][:-1]]
         i+=1
+    print(labels)
     return mat, labels
 
 def wrapper():
     mat, label = generate_training_set('train_img/')
-    outfil = open('training_X', 'w')
+    """outfil = open('training_X', 'w')
     outfile = open('training_Y', 'w')
     np.save(outfil, mat)
     np.save(outfile, label)
-    print mat.shape
-    print label.shape
+    print(mat.shape)
+    print(label.shape)
+    """
     #savemat('trainset', {'x':mat, 'y': label})
 
 if __name__ == "__main__":
+    print(generate_labelname_label_mapping())
     wrapper()
