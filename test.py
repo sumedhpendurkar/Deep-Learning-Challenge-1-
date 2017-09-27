@@ -2,22 +2,24 @@ import cv2
 import keras
 import numpy as np
 import os
+from keras.applications.inception_v3 import preprocess_input
 from ana import generate_labelname_label_mapping
 
 def generate_training_set(direct):
     image_name = os.listdir(direct)
     #mat = np.zeros((len(image_name), 256, 256, 3))
     mat = np.zeros((1,256, 256, 3))
-    model = keras.models.load_model("initial_weights.h5")
+    model = keras.models.load_model("inception-transferlearning_model.h5")
     image_name.sort()
     li = ['tea', 'fish', 'honey', 'juice', 'milk', 'nuts', 'sugar', 'jam', 'rice', 'coffee', 'oil', 'flour', 'corn', 'chocolate', 'water', 'cereal', 'pasta', 'chips', 'tomatosauce', 'vinegar', 'candy', 'beans', 'soda', 'cake', 'spices']
     i = 0
     for imagename in image_name:
         im = cv2.imread(direct+imagename)
-        mat[0] = im/255.
+        mat[0] = im
+        mat[0] = preprocess_input(mat[0])
         prediction = model.predict(mat, batch_size = 1)
         #print(prediction)
-        print(imagename +', ' +li[prediction.argmax()])
+        print(imagename[:-4] +',' +li[prediction.argmax()])
         i+=1
 
 

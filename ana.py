@@ -46,13 +46,12 @@ def generate_training_set(direct):
 
 def wrapper():
     mat, label = generate_training_set('train_img/')
-    """outfil = open('training_X', 'w')
+    outfil = open('training_X', 'w')
     outfile = open('training_Y', 'w')
     np.save(outfil, mat)
     np.save(outfile, label)
     print(mat.shape)
     print(label.shape)
-    """
     #savemat('trainset', {'x':mat, 'y': label})
 
 if __name__ == "__main__":
