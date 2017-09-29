@@ -9,7 +9,7 @@ def generate_training_set(direct):
     image_name = os.listdir(direct)
     #mat = np.zeros((len(image_name), 256, 256, 3))
     mat = np.zeros((1,256, 256, 3))
-    model = keras.models.load_model("inception-transferlearning_model3.h5")
+    model = keras.models.load_model("inception-transferlearning_model4.h5")
     print("loaded model and weights...")
     image_name.sort()
     li = ['tea', 'fish', 'honey', 'juice', 'milk', 'nuts', 'sugar', 'jam', 'rice', 'coffee', 'oil', 'flour', 'corn', 'chocolate', 'water', 'cereal', 'pasta', 'chips', 'tomatosauce', 'vinegar', 'candy', 'beans', 'soda', 'cake', 'spices']
