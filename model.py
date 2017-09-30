@@ -54,7 +54,7 @@ def transfered_inception():
     #x = Dense(1024, activation="relu", kernel_regularizer = keras.regularizers.l2(0.0001))(x)
     #x = Dropout(0.5)(x)
     #x = Dense(256, activation="relu", kernel_regularizer = keras.regularizers.l2(0.0001))(x)
-    predictions = Dense(25, activation="softmax", kernel_regularizer = keras.regularizers.l2(0.0005))(x)
+    predictions = Dense(25, activation="softmax", kernel_regularizer = keras.regularizers.l2(0.04))(x)
     base_model = keras.models.Model(base_model.input, predictions)
     base_model.compile(loss = 'categorical_crossentropy',  optimizer = Adam(lr = 0.0001, decay = 1e-6))
     return base_model
@@ -62,13 +62,13 @@ def transfered_inception():
 
 
 if __name__ == '__main__':
-    #model = transfered_inception()
-    model = keras.models.load_model('inception-transferlearning_model4.h5')
+    model = transfered_inception()
+    #model = keras.models.load_model('inception-transferlearning_model5.h5')
     X_train = preprocess_input(np.load('training_X'))
     Y_train = np.load('training_Y')
 
     Y_train = keras.utils.to_categorical(Y_train, 25) 
     model.summary()
     model.fit(X_train, Y_train, verbose = 2, epochs=60, batch_size=8, validation_split=0.1, 
-            callbacks=[ModelCheckpoint('inception-transferlearning_model4.h5', monitor='val_loss', save_best_only=True)])
-    model.save('model4.h5',  overwrite = True)
+            callbacks=[ModelCheckpoint('inception-transferlearning_model6.h5', monitor='val_loss', save_best_only=True)])
+    model.save('model5.h5',  overwrite = True)
