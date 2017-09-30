@@ -1,4 +1,4 @@
-# Deep Leaning challenge
+# Deep Learning challenge
 
 run
 ```
